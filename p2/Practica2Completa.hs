@@ -1,5 +1,6 @@
 module Practica2Completa where
 
+import Text.Printf
 
 -- 1
 -- Funcion que recibe dos tripletas que representan vectores de numeros enteros y nos devuelve su producto punto.
@@ -126,6 +127,15 @@ sumaDigitos x = (mod x 10) + sumaDigitos (div x 10)
 
 
 -- 10
--- Funcion que imprime un entero 
+-- Funcion que imprime un entero usando la libreria de Haskell "Text.Printf"
+-- Debo decir que descubrir printf y hacer esta funcion fue igual o mas dificil que hacer lo de los vectores
 imprimeUnEntero :: Int -> String 
-imprimeUnEntero _ = error "Falta implementar"
+imprimeUnEntero = printf "%v"
+
+--esPositivo :: Int -> Bool
+--esPositivo x = x >= 0
+
+
+    -- if x then printf "%d" else printf "-%d"
+
+
