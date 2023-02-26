@@ -1,4 +1,4 @@
-module Practica2 where
+module Practica2Completa where
 
 
 -- 1
