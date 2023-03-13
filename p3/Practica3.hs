@@ -1,6 +1,8 @@
 module Practica3
 where
 
+-- Alumno: Carlos Emilio Castañon Maldonado
+
 -- Funcion Auxiliar cuya funcion es:
 -- Verificar si un elemento se encuentra en una lista
 -- La uso en la funcion 3) interseccionListas 
@@ -128,8 +130,7 @@ calificaciones (x:xs)
 
 {-
 -- La funcion anterior pero sin usar mapea y filtra, pasa los test y casi entrego esta pero
--- no me di cuenta que no usaba mapea y filtra, asi que la deje comentada como recordatorio de primero leer las 
--- especificaciones antes de hacer las funciones jejejejejeje.
+-- no me di cuenta que no usaba mapea y filtra, asi que la deje comentada jejejejejeje.
 calificaciones :: [(String, Int)] -> ([(String, Int, String )], [(String, Int, String)])
 calificaciones [] = ([],[])
 calificaciones (x:xs) 
