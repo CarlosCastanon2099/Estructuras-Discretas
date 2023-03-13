@@ -1,5 +1,5 @@
 module Practica3
-where 
+where
 
 -- Funcion Auxiliar cuya funcion es:
 -- Verificar si un elemento se encuentra en una lista
@@ -15,12 +15,12 @@ contiene x (y:ys) = x == y || contiene x ys
 -- Ejemplo de uso2: eliminaRepetidos "parangaracutirimicuaro" = parngcutimo
 eliminaRepetidos :: (Eq a) => [a] -> [a]
 eliminaRepetidos [] = []
-eliminaRepetidos (x:xs) = x:eliminaRepetidos(eliminaRepetidosAux x xs)
+eliminaRepetidos (x:xs) = x:eliminaRepetidos (eliminaRepetidosAux x xs)
 
 -- Funcion auxiliar de eliminaRepetidos, su funcion es la de eliminar los elementos repetidos
 eliminaRepetidosAux :: (Eq a) => a -> [a] -> [a]
 eliminaRepetidosAux _ [] = []
-eliminaRepetidosAux x (y:ys) 
+eliminaRepetidosAux x (y:ys)
     | x == y = eliminaRepetidosAux x ys
     | otherwise = y:eliminaRepetidosAux x ys
 
@@ -34,7 +34,7 @@ eliminaRepetidosAux x (y:ys)
 unionListas :: (Eq a) => [a] -> [a] -> [a]
 unionListas xs [] = eliminaRepetidos xs
 unionListas [] xs = eliminaRepetidos xs
-unionListas (y:ys) xs = eliminaRepetidos (y:(unionListas ys xs))
+unionListas (y:ys) xs = eliminaRepetidos (y:unionListas ys xs)
 
 
 
@@ -47,7 +47,7 @@ unionListas (y:ys) xs = eliminaRepetidos (y:(unionListas ys xs))
 interseccionListas :: (Eq a) => [a] -> [a] -> [a]
 interseccionListas  xs [] = []
 interseccionListas [] xs = []
-interseccionListas (y:ys) xs 
+interseccionListas (y:ys) xs
     | contiene y xs = eliminaRepetidos (y:interseccionListas ys xs)
     | otherwise = eliminaRepetidos (interseccionListas ys xs)
 
@@ -84,7 +84,7 @@ zipeaWith f (x:xs) (y:ys) = f x y:zipeaWith f xs ys
 -- Ejemplo de uso: filtra (> 10 ) [1..20] = [11,12,13,14,15,16,17,18,19,20]
 filtra :: (a -> Bool) -> [a] -> [a]
 filtra _ [] = []
-filtra f (x:xs) 
+filtra f (x:xs)
     | f x = x:filtra f xs
     | otherwise = filtra f xs
 
@@ -100,7 +100,7 @@ minimoLista (x:xs) = minimoListaAux x xs
 -- Funcion auxiliar de minimoLista, su funcion es la de recorrer la lista y encontrar el minimo
 minimoListaAux :: Int -> [Int] -> Int
 minimoListaAux x [] = x
-minimoListaAux x (y:ys) 
+minimoListaAux x (y:ys)
     | x < y = minimoListaAux x ys
     | otherwise = minimoListaAux y ys
 
@@ -116,11 +116,28 @@ minimoListaAux x (y:ys)
 -- El mensaje de felicidades es: "Felicidades!" El mensaje de esforzarse es: "Necesitas esforzarte +"
 -- La segunda tiene la misma estructura, solo que contiene a los alumnos con una calificacion menor o igual a 6 y un mensaje de que se esfuercen mas.
 -- En esta practica, esta lista la devuelve la funcion: listaAlumnos
+-- Debemos usar las funciones mapea y filtra para lograr esto.
+
+-- Nota: despues de todo un fin de semana de intentarlo, por fin quedo bien esta func usando mapea y filtra =D
+calificaciones :: [(String, Int)] -> ([(String, Int, String )], [(String, Int, String)])
+calificaciones [] = ([],[])
+calificaciones (x:xs) 
+    | snd' x > 6 = ((mapea (\(a,b) -> (a,b,"Necesitas esforzarte +")) (filtra (\(a,b) -> b > 6) (x:xs))), (mapea (\(a,b) -> (a,b,"Felicidades!")) (filtra (\(a,b) -> b <= 6) (x:xs))))
+    | otherwise = ((mapea (\(a,b) -> (a,b,"Felicidades!")) (filtra (\(a,b) -> b > 6) (x:xs))), (mapea (\(a,b) -> (a,b,"Necesitas esforzarte +")) (filtra (\(a,b) -> b <= 6) (x:xs))))
+
+
+{-
+-- La funcion anterior pero sin usar mapea y filtra, pasa los test y casi entrego esta pero
+-- no me di cuenta que no usaba mapea y filtra, asi que la deje comentada como recordatorio de primero leer las 
+-- especificaciones antes de hacer las funciones jejejejejeje.
 calificaciones :: [(String, Int)] -> ([(String, Int, String )], [(String, Int, String)])
 calificaciones [] = ([],[])
 calificaciones (x:xs) 
     | snd' x > 6 = ((fst' x, snd' x, "Felicidades!"):fst' (calificaciones xs), snd' (calificaciones xs))
     | otherwise = (fst' (calificaciones xs), (fst' x, snd' x, "Necesitas esforzarte +"):snd' (calificaciones xs))
+-}
+
+
 
 -- Funcion Auxiliar que devuelve el primer elemento de una tupla.
 -- Ejemplo de uso: fst' (1,2) = 1
