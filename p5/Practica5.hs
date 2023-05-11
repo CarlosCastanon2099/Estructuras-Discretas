@@ -4,6 +4,11 @@ module Practica5 where
 
 Alumno: Carlos Emilio Castañon Maldonado
 
+NOTA: En el archivo Practica5Tests.hs cambiar en la linea 64 el res_arbolProp
+Por: "(\"[Conj ?Syss x  !Neg F!? <Impl {Disy a  b}  F>]\" (\"?Syss x !Neg F!?\" (H: \"x\")  (H: \"<->\")  (\"!Neg F!\" (H: \"~\")  (H: \"F\")  _))  (H: \"^\")  (\"<Impl {Disy a  b} F>\" (\"{Disy a b}\" (H: \"a\")  (H: \"V\")  (H: \"b\"))  (H: \"->\")  (H: \"F\")))" 
+Ya que el que esta originalmeente tiene 5 espacios en blanco entre simbolos que hace que marque la prueba como False
+Aunque se traten de las mismas cadenas a excepcion de esos 5 espacios en blanco xd.
+
 La funcion lambda1 esta definida de la siguiente manera:
 
 lambda1 :: (Int -> Int -> Int) -> [Int] -> Int
@@ -358,14 +363,17 @@ de dicha formula
 -- Funcion de la tabla de verdad que recibe una formula (PROP) y nos devuelve la tabla de verdad de dicha formula
 tablaDeVerdad :: Prop -> IO ()
 tablaDeVerdad p = do
-    let vars = eliminaRepetidos $ listaVariables p
+    let vars = eliminaRepetidos $ listaVariables p  -- Tomamos prestada eliminaRepetidos de la linea 230 de el ejercicio 5)
     let rows = combinacionesDeValoresVerdad vars
     putStrLn $ intercalate " | " vars ++ " | " ++ show p
     putStrLn $ replicate (length vars + 4 + length (show p)) '-'
-    mapM_ (\r -> putStrLn $ intercalate " | " (map (\(x,b) -> show b) r) ++ " | " ++ show (eval p r)) rows
+    mapM_ (\r -> putStrLn $ intercalate " | " (map (\(x,b) -> show b) r) ++ " | " ++ show (interpretacion p r)) rows -- Aqui usamos Interpretacion de la linea 140
 
 
 -- Funcion auxiliar que nos devuelve una lista de las variables de una formula
+-- Notese que esta es la version Digi-Evolucionada de vars del ejercicio 5)
+-- Y que por alguna razon no funciona el usar vars directamente en tablaDeVerdad XD
+-- PD: Ya me di cuenta por que pasaba lo anterior pero lo dejo como ejercicio para el lector 
 listaVariables :: Prop -> [String]
 listaVariables (Var x) = [x]
 listaVariables T = []
@@ -393,25 +401,6 @@ intercalate _ [] = []
 intercalate _ [x] = x
 intercalate xs (x:ys) = x ++ xs ++ intercalate xs ys
 
-
--- Función Auxiliar que evalua toma una expresión proposicional (Prop) y un estado (Estado) que asigna valores de verdad a las variables
--- y devuelve el resultado de evaluar la expresión en ese estado, utilizando las reglas de la lógica proposicional.
-eval :: Prop -> Estado -> Bool
-eval (Var x) v = fromJust (lookup x v) -- Usamos lookup para buscar el valor de verdad de la variable x en el estado 
-eval T _ = True                        -- Usamos fromJust para obtener el valor de verdad de la variable x en el estado 
-eval F _ = False
-eval (Neg p) v = not (eval p v)
-eval (Conj p q) v = eval p v && eval q v
-eval (Disy p q) v = eval p v || eval q v
-eval (Impl p q) v = not (eval p v) || eval q v
-eval (Syss p q) v = eval p v == eval q v
-
-
--- Implementacion de la funcion fromJust de Data.Maybe para no tener que importarla
--- Devuelve el valor contenido en un Maybe, si es Nothing devuelve un error
-fromJust :: Maybe a -> a
-fromJust (Just x) = x
-fromJust Nothing = error "Maybe.fromJust: Nothing"
 
 
 
