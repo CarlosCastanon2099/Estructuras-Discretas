@@ -115,6 +115,16 @@ instance Show Prop where
   show (Disy x y) = show x ++ " \\/ " ++ show y
   show (Impl x y) = show x ++ " -> " ++ show y
   show (Syss x y) = show x ++ " <->  " ++ show y
+
+instance Show Prop where
+   show (Var p) = p
+   show T = "T"
+   show F = "F"
+   show (Neg p) = "¬" ++ show p
+   show (Conj p q) = "(" ++ show p ++ " ^ " ++ show q ++ ")"
+   show (Disy p q) = "(" ++ show p ++ " v " ++ show q ++ ")"
+   show (Impl p q) = "(" ++ show p ++ " -> " ++ show q ++ ")"
+   show (Syss p q) = "(" ++ show p ++ " <-> " ++ show q ++ ")"
 -}
 
 
@@ -229,16 +239,16 @@ eliminaRepetidos (x:xs) = x : eliminaRepetidos (filter (/= x) xs)
 -- Ejemplo2: fnn (Neg T) = F
 -- Ejemplo3: fnn (Syss (Conj (Var "x") T) (Disy F (Var "y")) ) = [Conj {Disy {Disy !Neg x! F} {Disy F y}} {Disy [Conj T !Neg y!] [Conj x T]}]
 fnn :: Prop -> Prop
-fnn p = negs_remove $ morgan $ imp_remove p
+fnn p = quitaNegaciones $ morgan $ quitaImp p
 
--- Funcion Auxiliar que elimina las negaciones de constantes
-imp_remove :: Prop -> Prop
-imp_remove (Impl p q) = Disy (imp_remove (Neg p)) (imp_remove q)
-imp_remove (Syss p q) = (Conj (imp_remove (Impl p q)) (imp_remove (Impl q p)))
-imp_remove (Conj p q) = Conj (imp_remove p) (imp_remove q)
-imp_remove (Disy p q) = Disy (imp_remove p) (imp_remove q)
-imp_remove (Neg p) = Neg (imp_remove p)
-imp_remove p = p
+-- Funcion Auxiliar que elimina las implicaciones
+quitaImp :: Prop -> Prop
+quitaImp (Impl p q) = Disy (quitaImp (Neg p)) (quitaImp q)
+quitaImp (Syss p q) = (Conj (quitaImp (Impl p q)) (quitaImp (Impl q p)))
+quitaImp (Conj p q) = Conj (quitaImp p) (quitaImp q)
+quitaImp (Disy p q) = Disy (quitaImp p) (quitaImp q)
+quitaImp (Neg p) = Neg (quitaImp p)
+quitaImp p = p
 
 -- Funcion Auxiliar que aplica las leyes de Morgan
 morgan :: Prop -> Prop
@@ -250,14 +260,14 @@ morgan (Disy p q) = Disy (morgan p) (morgan q)
 morgan p = p
 
 -- Funcion Auxiliar que elimina las negaciones 
-negs_remove :: Prop -> Prop
-negs_remove (Neg (Neg p)) = negs_remove p
-negs_remove (Neg (T)) = (F)
-negs_remove (Neg (F)) = (T)
-negs_remove (Neg p) = Neg (negs_remove p)
-negs_remove (Conj p q) = Conj (negs_remove p) (negs_remove q)
-negs_remove (Disy p q) = Disy (negs_remove p) (negs_remove q)
-negs_remove p = p
+quitaNegaciones :: Prop -> Prop
+quitaNegaciones (Neg (Neg p)) = quitaNegaciones p
+quitaNegaciones (Neg (T)) = (F)
+quitaNegaciones (Neg (F)) = (T)
+quitaNegaciones (Neg p) = Neg (quitaNegaciones p)
+quitaNegaciones (Conj p q) = Conj (quitaNegaciones p) (quitaNegaciones q)
+quitaNegaciones (Disy p q) = Disy (quitaNegaciones p) (quitaNegaciones q)
+quitaNegaciones p = p
 
 
 {-
@@ -321,7 +331,7 @@ meteNegacion' (Disy p q) = Conj (meteNegacion' p) (meteNegacion' q)
 7)
 Define la funcion tablaDeVerdad que recibe una Prop y nos devuelve la tabla de verdad
 de dicha formula
--- Ejemplo: truthTable (Conj (Var "p") (Var "q")) =
+-- Ejemplo: tablaDeVerdad (Conj (Var "p") (Var "q")) =
                                                     p | q | [Conj p  q]
                                                     -----------------
                                                     True  | True  | True
@@ -329,7 +339,7 @@ de dicha formula
                                                     False | True  | False
                                                     False | False | False
 
--- Ejemplo2: truthTable (Disy (Var "p") (Var "q")) =
+-- Ejemplo2: tablaDeVerdad (Disy (Var "p") (Var "q")) =
                                                     p | q | {Disy p  q}
                                                     -----------------
                                                     True  | True  | True
@@ -337,7 +347,7 @@ de dicha formula
                                                     False | True  | True
                                                     False | False | False
 
--- Ejemplo3: truthTable (Syss (Conj (Var "x") T) (Disy F (Var "y")) ) =
+-- Ejemplo3: tablaDeVerdad (Syss (Conj (Var "x") T) (Disy F (Var "y")) ) =
                                                     x | y | ?Syss [Conj x  T]  {Disy F  y}?
                                                     -------------------------------------
                                                     True  | True  | True
@@ -345,43 +355,50 @@ de dicha formula
                                                     False | True  | False
                                                     False | False | True
 -}
-
-truthTable :: Prop -> IO ()
-truthTable p = do
-    let vars = nub $ getVars p
-    let rows = generateRows vars
+-- Funcion de la tabla de verdad que recibe una formula (PROP) y nos devuelve la tabla de verdad de dicha formula
+tablaDeVerdad :: Prop -> IO ()
+tablaDeVerdad p = do
+    let vars = eliminaRepetidos $ listaVariables p
+    let rows = combinacionesDeValoresVerdad vars
     putStrLn $ intercalate " | " vars ++ " | " ++ show p
     putStrLn $ replicate (length vars + 4 + length (show p)) '-'
     mapM_ (\r -> putStrLn $ intercalate " | " (map (\(x,b) -> show b) r) ++ " | " ++ show (eval p r)) rows
 
-nub :: Eq a => [a] -> [a]
-nub [] = []
-nub (x:xs) = x : nub (filter (/= x) xs)
 
-getVars :: Prop -> [String]
-getVars (Var x) = [x]
-getVars T = []
-getVars F = []
-getVars (Neg p) = getVars p
-getVars (Conj p q) = nub $ getVars p ++ getVars q
-getVars (Disy p q) = nub $ getVars p ++ getVars q
-getVars (Impl p q) = nub $ getVars p ++ getVars q
-getVars (Syss p q) = nub $ getVars p ++ getVars q
+-- Funcion auxiliar que nos devuelve una lista de las variables de una formula
+listaVariables :: Prop -> [String]
+listaVariables (Var x) = [x]
+listaVariables T = []
+listaVariables F = []
+listaVariables (Neg p) = listaVariables p
+listaVariables (Conj p q) = eliminaRepetidos $ listaVariables p ++ listaVariables q
+listaVariables (Disy p q) = eliminaRepetidos $ listaVariables p ++ listaVariables q
+listaVariables (Impl p q) = eliminaRepetidos $ listaVariables p ++ listaVariables q
+listaVariables (Syss p q) = eliminaRepetidos $ listaVariables p ++ listaVariables q
 
-generateRows :: [String] -> [Estado]
-generateRows [] = [[]]
-generateRows (x:xs) = [(x,True):r | r <- rs] ++ [(x,False):r | r <- rs]
-    where rs = generateRows xs
 
+-- Funcion auxiliar que genera todas las posible combinaciones de valores de verdad para una lista de variables
+-- en la forma de una lista de estados, es decir, una lista de listas de pares (variable, valor de verdad)
+combinacionesDeValoresVerdad :: [String] -> [Estado]
+combinacionesDeValoresVerdad [] = [[]]
+combinacionesDeValoresVerdad (x:xs) = [(x,True):r | r <- rs] ++ [(x,False):r | r <- rs]
+    where rs = combinacionesDeValoresVerdad xs
+
+
+-- Implementacion de la funcion intercalate de Data.List para no tener que importarla
+-- concatena una lista de listas [a] utilizando una lista separadora [a] para intercalar entre cada una de las listas. 
+-- Devuelve una única lista resultante [a].
 intercalate :: [a] -> [[a]] -> [a]
 intercalate _ [] = []
 intercalate _ [x] = x
 intercalate xs (x:ys) = x ++ xs ++ intercalate xs ys
 
 
+-- Función Auxiliar que evalua toma una expresión proposicional (Prop) y un estado (Estado) que asigna valores de verdad a las variables
+-- y devuelve el resultado de evaluar la expresión en ese estado, utilizando las reglas de la lógica proposicional.
 eval :: Prop -> Estado -> Bool
-eval (Var x) v = fromJust (lookup x v)
-eval T _ = True
+eval (Var x) v = fromJust (lookup x v) -- Usamos lookup para buscar el valor de verdad de la variable x en el estado 
+eval T _ = True                        -- Usamos fromJust para obtener el valor de verdad de la variable x en el estado 
 eval F _ = False
 eval (Neg p) v = not (eval p v)
 eval (Conj p q) v = eval p v && eval q v
@@ -390,6 +407,8 @@ eval (Impl p q) v = not (eval p v) || eval q v
 eval (Syss p q) v = eval p v == eval q v
 
 
+-- Implementacion de la funcion fromJust de Data.Maybe para no tener que importarla
+-- Devuelve el valor contenido en un Maybe, si es Nothing devuelve un error
 fromJust :: Maybe a -> a
 fromJust (Just x) = x
 fromJust Nothing = error "Maybe.fromJust: Nothing"
