@@ -60,11 +60,12 @@ prop_foldlTConcat arbol = foldlTConcat
         foldlTConcat = foldlT (++) [] arbol == (foldr (++) [] $ preorder arbol)
 
 
-input = Conj (Syss (Var "x") (Neg (F))) (Impl (Disy (Var "a") (Var "b")) F )
+input = (Conj (Syss (Var "x") (Neg (F))) (Impl (Disy (Var "a") (Var "b")) F ))
 res_arbolProp = "(\"[Conj ?Syss x  !Neg F!?  <Impl {Disy a  b}  F>]\" (\"?Syss x  !Neg F!?\" (H: \"x\")  (H: \"<->\")  (\"!Neg F!\" (H: \"~\")  (H: \"F\")  _))  (H: \"^\")  (\"<Impl {Disy a  b}  F>\" (\"{Disy a  b}\" (H: \"a\")  (H: \"V\")  (H: \"b\"))  (H: \"->\")  (H: \"F\")))"
+sec_arbolProp = "(\"[Conj ?Syss x  !Neg F!? <Impl {Disy a  b}  F>]\" (\"?Syss x !Neg F!?\" (H: \"x\")  (H: \"<->\")  (\"!Neg F!\" (H: \"~\")  (H: \"F\")  _))  (H: \"^\")  (\"<Impl {Disy a  b} F>\" (\"{Disy a b}\" (H: \"a\")  (H: \"V\")  (H: \"b\"))  (H: \"->\")  (H: \"F\")))"    
 
 prop_arbolProp :: Bool
-prop_arbolProp  = show (propAArbolString input) == res_arbolProp
+prop_arbolProp  = show (propAArbolString input) == sec_arbolProp
 
 
 prop_vars :: Prop -> Bool

@@ -95,6 +95,28 @@ instance Show Prop where
     show (Impl x y) = "<Impl " ++ (show x) ++ "  "++(show y) ++">"
     show (Syss x y) = "?Syss " ++ (show x) ++ "  "++(show y) ++"?"
 
+{-
+instance Show Prop where 
+    show (Var x) = x 
+    show (T)  = "T"
+    show (F) = "F"
+    show (Neg p) = "!Neg "++ show p ++ "!"
+    show (Conj x y) = "[Conj " ++ (show x) ++ "  "++ (show y) ++"]"
+    show (Disy x y) = "{Disy " ++ (show x) ++ "  "++(show y) ++"}"
+    show (Impl x y) = "<Impl " ++ (show x) ++ "  "++(show y) ++">"
+    show (Syss x y) = "?Syss " ++ (show x) ++ "  "++(show y) ++"?"
+
+instance Show Prop where
+  show (Var x) = x
+  show T = "T"
+  show F = "F"
+  show (Neg p) = "¬ " ++ show p
+  show (Conj x y) = show x ++ " /\\ " ++ show y
+  show (Disy x y) = show x ++ " \\/ " ++ show y
+  show (Impl x y) = show x ++ " -> " ++ show y
+  show (Syss x y) = show x ++ " <->  " ++ show y
+-}
+
 
 
 type Estado = [(String, Bool)]
@@ -295,48 +317,47 @@ meteNegacion' (Disy p q) = Conj (meteNegacion' p) (meteNegacion' q)
  
 
 
+{-
+7)
+Define la funcion tablaDeVerdad que recibe una Prop y nos devuelve la tabla de verdad
+de dicha formula
+-- Ejemplo: truthTable (Conj (Var "p") (Var "q")) =
+                                                    p | q | [Conj p  q]
+                                                    -----------------
+                                                    True  | True  | True
+                                                    True  | False | False
+                                                    False | True  | False
+                                                    False | False | False
 
+-- Ejemplo2: truthTable (Disy (Var "p") (Var "q")) =
+                                                    p | q | {Disy p  q}
+                                                    -----------------
+                                                    True  | True  | True
+                                                    True  | False | True
+                                                    False | True  | True
+                                                    False | False | False
 
--- 7)
--- Define la funcion tablaDeVerdad que recibe una Prop y nos devuelve la tabla de verdad
--- de dicha formula
--- Ejemplo: tablaDeVerdad (Conj (Var "p") (Var "q")) =
-tablaDeVerdad :: Prop -> IO ()
-tablaDeVerdad p = do
-    let vars = nub $ variables p
-    let rows = generateRows vars
-    let header = intercalate " | " vars ++ " | " ++ show p
-    putStrLn header
-    putStrLn (replicate (length header) '-')
-    mapM_ (putStrLn . rowToString p) rows
+-- Ejemplo3: truthTable (Syss (Conj (Var "x") T) (Disy F (Var "y")) ) =
+                                                    x | y | ?Syss [Conj x  T]  {Disy F  y}?
+                                                    -------------------------------------
+                                                    True  | True  | True
+                                                    True  | False | False
+                                                    False | True  | False
+                                                    False | False | True
+-}
 
--- Evalúa una proposición en función de una asignación de valores de verdad para las variables
-eval :: Prop -> Estado -> Bool
-eval (Var x) v = fromJust (lookup x v)
-eval T _ = True
-eval F _ = False
-eval (Neg p) v = not (eval p v)
-eval (Conj p q) v = eval p v && eval q v
-eval (Disy p q) v = eval p v || eval q v
-eval (Impl p q) v = not (eval p v) || eval q v
-eval (Syss p q) v = eval p v == eval q v
-
--- Genera todas las posibles combinaciones de valores de verdad para las variables
-generateRows :: [String] -> [Estado]
-generateRows [] = [[]]
-generateRows (x:xs) = [(x,True):r | r <- rs] ++ [(x,False):r | r <- rs]
-    where rs = generateRows xs
-
--- Genera la tabla de verdad de una proposición
 truthTable :: Prop -> IO ()
 truthTable p = do
-    let vars = nub $ getVars p -- Obtener las variables proposicionales en la proposición
-    let rows = generateRows vars -- Generar todas las posibles combinaciones de valores de verdad para las variables
-    putStrLn $ intercalate " | " vars ++ " | " ++ show p -- Imprimir la cabecera de la tabla
-    putStrLn $ replicate (length vars + 2 + length (show p)) '-' -- Imprimir la línea separadora
-    mapM_ (\r -> putStrLn $ intercalate " | " (map (\(x,b) -> show b) r) ++ " | " ++ show (eval p r)) rows -- Imprimir cada fila de la tabla
+    let vars = nub $ getVars p
+    let rows = generateRows vars
+    putStrLn $ intercalate " | " vars ++ " | " ++ show p
+    putStrLn $ replicate (length vars + 4 + length (show p)) '-'
+    mapM_ (\r -> putStrLn $ intercalate " | " (map (\(x,b) -> show b) r) ++ " | " ++ show (eval p r)) rows
 
--- Obtener las variables proposicionales en una proposición
+nub :: Eq a => [a] -> [a]
+nub [] = []
+nub (x:xs) = x : nub (filter (/= x) xs)
+
 getVars :: Prop -> [String]
 getVars (Var x) = [x]
 getVars T = []
@@ -347,77 +368,31 @@ getVars (Disy p q) = nub $ getVars p ++ getVars q
 getVars (Impl p q) = nub $ getVars p ++ getVars q
 getVars (Syss p q) = nub $ getVars p ++ getVars q
 
+generateRows :: [String] -> [Estado]
+generateRows [] = [[]]
+generateRows (x:xs) = [(x,True):r | r <- rs] ++ [(x,False):r | r <- rs]
+    where rs = generateRows xs
+
+intercalate :: [a] -> [[a]] -> [a]
+intercalate _ [] = []
+intercalate _ [x] = x
+intercalate xs (x:ys) = x ++ xs ++ intercalate xs ys
 
 
-
-{-
-tipoProp :: Prop -> String
-tipoProp p = case (eval p) of
-    True -> if (esTautologia p) then "Tautologia" else "Contingencia"
-    False -> "Contradiccion" 
-
--- Funcion auxiliar que nos dice si una formula es una tautologia
-esTautologia :: Prop -> Bool
-esTautologia p = case (eval p) of
-    True -> if (esTautologia' p) then True else False
-    False -> False
-
-eval :: Prop -> Bool
-eval (Var p) = False
-eval (T) = True
-eval (F) = False
-eval (Neg p) = if (eval p) then False else True
+eval :: Prop -> Estado -> Bool
+eval (Var x) v = fromJust (lookup x v)
+eval T _ = True
+eval F _ = False
+eval (Neg p) v = not (eval p v)
+eval (Conj p q) v = eval p v && eval q v
+eval (Disy p q) v = eval p v || eval q v
+eval (Impl p q) v = not (eval p v) || eval q v
+eval (Syss p q) v = eval p v == eval q v
 
 
--- Funcion auxiliar que nos dice si una formula es una tautologia
-esTautologia' :: Prop -> Bool
-esTautologia' (Var p) = False
-esTautologia' (T) = True
-esTautologia' (F) = False
-esTautologia' (Neg p) = if (esTautologia' p) then False else True
-esTautologia' (Conj p q) = if (esTautologia' p) && (esTautologia' q) then True else False
-esTautologia' (Disy p q) = if (esTautologia' p) || (esTautologia' q) then True else False
-esTautologia' (Impl p q) = if (esTautologia' p) && (esTautologia' q) then True else False
-esTautologia' (Syss p q) = if (esTautologia' p) && (esTautologia' q) then True else False
-
--- Funcion auxiliar que nos dice si una formula es una contradiccion
-esContradiccion :: Prop -> Bool
-esContradiccion p = case (eval p) of
-    True -> False
-    False -> if (esContradiccion' p) then True else False
-
--- Funcion auxiliar que nos dice si una formula es una contradiccion
-esContradiccion' :: Prop -> Bool
-esContradiccion' (Var p) = False
-esContradiccion' (T) = False
-esContradiccion' (F) = True
-esContradiccion' (Neg p) = if (esContradiccion' p) then True else False
-esContradiccion' (Conj p q) = if (esContradiccion' p) || (esContradiccion' q) then True else False
-esContradiccion' (Disy p q) = if (esContradiccion' p) && (esContradiccion' q) then True else False
-esContradiccion' (Impl p q) = if (esContradiccion' p) && (esContradiccion' q) then True else False
-esContradiccion' (Syss p q) = if (esContradiccion' p) && (esContradiccion' q) then True else False
-
--- Funcion auxiliar que nos dice si una formula es una contingencia
-esContingencia :: Prop -> Bool
-esContingencia p = case (eval p) of
-    True -> if (esContingencia' p) then True else False
-    False -> if (esContingencia' p) then True else False
-
--- Funcion auxiliar que nos dice si una formula es una contingencia
-esContingencia' :: Prop -> Bool
-esContingencia' (Var p) = False
-esContingencia' (T) = False
-esContingencia' (F) = False
-esContingencia' (Neg p) = if (esContingencia' p) then True else False
-esContingencia' (Conj p q) = if (esContingencia' p) || (esContingencia' q) then True else False
-esContingencia' (Disy p q) = if (esContingencia' p) || (esContingencia' q) then True else False
-esContingencia' (Impl p q) = if (esContingencia' p) || (esContingencia' q) then True else False
-esContingencia' (Syss p q) = if (esContingencia' p) || (esContingencia' q) then True else False
-
--- Funcion que nos devuelve una lista con todas las variables de una formula
-
--}
-
+fromJust :: Maybe a -> a
+fromJust (Just x) = x
+fromJust Nothing = error "Maybe.fromJust: Nothing"
 
 
 
