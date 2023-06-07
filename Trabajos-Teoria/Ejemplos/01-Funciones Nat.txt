@@ -1,0 +1,47 @@
+Conjunto Nat
+
+Caso Base:
+Cero es un Nat
+
+Caso Recursivo:
+Si x es un Nat entonces Suc(x) es un Nat
+-------------------------------------------------------
+
+mayorNat(n,m)
+Verifica si el primer Nat es mayor que el segundo
+
+Caso Base:
+mayorNat(Cero,m) = Falso
+mayorNat(n,Cero) = Verdadero
+mayorNat(Cero,Cero) = Falso
+
+Caso Recursivo:
+mayorNat(Suc(n),Suc(m)) = mayorNat(n,m)
+
+mayorNat( Suc(Suc(Suc(Cero))), Suc(Suc(Cero)) ) =
+mayorNat( Suc(Suc(Cero)), Suc(Cero) )
+mayorNat( Suc(Cero), Cero )
+Verdadero
+
+--------------------------------------------------------------
+mayorIgualNat(n,m)
+Verifica si el primer Nat es mayor o igual que el segundo
+
+Caso Base:
+mayorIgualNat(Cero,Cero) = Verdadero
+mayorIgualNat(n,Cero) = Verdadero
+mayorIgualNat(Cero,m) = Falso
+
+Caso Recursivo:
+mayorIgualNat( Suc(n), Suc(m) ) = mayorIgualNat( n, m )
+
+-------------------------------------------------------------
+
+Cómo generan una función recursiva que verifique si un elemento
+del conjunto Nat es par o impar
+
+par( Suc(Suc(Suc(Cero))) ) --> Falso
+impar( Suc(Suc(Suc(Cero))) ) --> Verdadero
+
+par( Suc(Suc(Suc(Suc(Cero)))) ) --> Verdadero
+impar( Suc(Suc(Suc(Suc(Cero)))) ) --> Falso

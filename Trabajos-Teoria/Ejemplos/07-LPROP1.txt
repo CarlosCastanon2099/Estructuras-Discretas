@@ -1,0 +1,105 @@
+Lógica Proposicional
+
+Una expresión de la lógica proposicional (LPROP) se define recursivamente de la siguiente forma:
+
+Caso Base:
+
+a) Las constantes lógicas True y False son expresiones LPROP
+
+b) Las variables proposicionales son elementos LPROP (fórmulas atómicas)
+
+                              p,q,r,...
+Caso Recursivo:
+
+c) Si A es una expresión LPROP, entonces (¬A) es una expresión LPROP
+   (La cual llamamos negación de A)
+
+d) Si A y B son expresiones LPROP, entonces
+     i) (A ^ B) es una expresión LPROP    (Conjunción)
+    ii) (A v B) es una expresión LPROP    (Disyunción)
+   iii) (A -> B) es una expresión LPROP   (Implicación)
+    iv) (A <-> B) es una expresión LPROP  (Equivalencia)
+
+e) Sólo éstas son expresiones LPROP
+
+----------------------------------------------------------------------
+
+Definición 1 (Proposición) 
+
+Una proposición es un enunciado declarativo (una afirmación) que puede ser verdadera o falsa, pero no ambas 
+
+Ejemplo:
+
+1. El ser humano es inteligente
+2. 4+3 = 5
+3. La vaca no es negra
+4. Si 3+3 > 5 entonces 4*(3+3) > 20
+5. El agua está tibia
+
+
+Definición 2 (Proposiciones atómicas)
+
+Se denomina proposición simple o atómica aquella que no tiene conectivos lógicos
+
+Ejemplo: 
+
+1. Euler enseñó matemáticas 
+2. Bután es la capital de Timbu
+3. 3+5 = 35
+4. El caballo de Napoleón es blanco
+5. En el horario de invierno el sol sale a las 7 am
+
+
+Definición 3 (Proposiciones compuestas)
+
+Una proposición compuesta se forma a partir de proposiciones atómicas y conectivos lógicos
+
+Ejemplo:
+
+1. Euler enseñó matemáticas o estudió filosofía
+2. Bután no es capital de Timbu
+3. Si 2+3=5 entonces 2+3+6=11
+4. En el horario de invierno el sol sale a las 7 am y se oculta a las 6 pm
+5. Dos número son impares sí y sólo si su suma es par
+
+
+Toda proposición atómica puede ser representada como una variable proposicional 
+
+Lenguaje Natural (Español)                            Lógica Proposicional (LPROP)
+      Enunciado                                          Variable Proposicional
+
+Euler enseñó matemáticas              --------                      p
+
+Las nueces son saladas                --------                      q
+
+
+Proposiciones compuestas 
+
+Lenguaje Natural (Español)                            Lógica Proposicional (LPROP)
+       Enunciado                                         Variable Proposicional 
+
+Euler enseñó matemáticas o estudió filosofía                      p v r
+
+------Puede ser representado como dos enunciados enlazados con un conectivo------
+
+1. Euler enseñó matemáticas                                          p
+
+2. Euler estudió filosofía                                           r
+
+                                                      
+Bután es capital de Timbu                                            t
+
+------Podemos representarlo como la negación de dicho enunciado------
+
+Bután NO es capital de Timbu                                        ¬t
+
+
+
+
+
+
+
+
+
+
+

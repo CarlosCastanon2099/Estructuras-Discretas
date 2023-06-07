@@ -1,0 +1,77 @@
+
+-----------------------------------------------------
+Equivalencia
+
+(p <-> ¬q) ∧ (q ∧ ¬p) ≡ ¬(q -> p)
+
+(p <-> ¬q) ∧ (q ∧ ¬p) ≡ ((p -> ¬q) ^ (¬q -> p)) ^ (q ^ ¬p)
+                      ≡ (p ^ ¬q) V (¬p ^ q) ^ (q ^ ¬p)
+                      ≡ 
+
+
+-----------------------------------------------------
+Satisfacibilidad
+
+Determina si las fórmulas son satisfacibles o no, en caso de serlo da un modelo
+
+A) (p ^ q) <-> ((¬p) ^ q)
+   I[(p ^ q) <-> ((¬p) ^ q)] = T
+      I[(p ^ q)] = T 
+      De la anterior puedo deducir que I(p) = T y I(q) = T
+      I[((¬p) ^ q)] = T
+
+	I[p ^ q] = F
+     I[¬p ^ q] = F
+     I(q) = F
+	I(¬p) = F esto implica que I(p) = T 
+
+
+B) (p ^ q) ^ (¬p)
+
+    p ^ q ^ ¬p
+    (p ^ ¬p) ^ q
+
+   I(p^q)=T
+   I(¬p)=T en conclusión I(p) = F
+
+   
+
+-----------------------------------------------------
+Interpretaciones
+
+A) {p->q, ¬q} / (¬p)
+
+1. I(p->q)      = T     Hipótesis
+2. I(¬q)        = T     Hipótesis
+3. I(q)         = F     Por 2
+4. I(p)         = F.    Por 1 y 3
+5. I(¬p) = T
+
+
+B) {q->p, r->p} / rVs
+
+1. I(q->p)        = T  Hipótesis
+2. I(r->p)        = T  Hipótesis
+
+-----------------------------------------------------
+Derivaciones 
+
+A) {¬p ^ q, s, q ^ s -> t, ¬r V t} / ¬(p V ¬t)
+
+1. ¬p ^ q			Hipótesis
+2. s				Hipótesis
+3. q ^ s -> t		Hipótesis
+4. ¬r V t			Hipótesis
+5. ¬p                E^ en 1
+6. q 				E^ en 1
+7. q^s			I^ en 2 y 6
+8. t				MP 3 y 7
+9. ¬¬t			Doble negación en 8
+10. ¬p ^ ¬¬t        I^ en 5 y 9
+11. ¬(p V ¬t)		Morgan en 10
+
+
+
+B) {p -> r, r -> s, q V ¬s, ¬q V u, ¬u} / ¬p
+
+-----------------------------------------------------

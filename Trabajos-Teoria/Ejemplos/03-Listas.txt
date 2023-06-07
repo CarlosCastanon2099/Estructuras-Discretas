@@ -1,0 +1,59 @@
+
+La función (eliminaN n xs) quita los primeros n elementos de la lista xs
+Esta función requiere que le demos un número n que deseamos eliminar
+y una lista xs a la cual se le quitarían ese número de elementos
+comenzando por la cabeza de la lista.
+
+Tenemos la lista de números
+
+[2,3,5,5,6,7,81,2,3,5]
+
+y queremos eliminar los primeros 3 elementos.
+
+eliminaN 3 [2,3,5,5,6,7,81,2,3,5] = [5,6,7,81,2,3,5]
+
+
+eliminaN :: Int -> [a] -> [a]
+
+Caso Base
+eliminaN 0 xs = xs
+eliminaN n [] = []
+
+Caso Recursivo
+eliminaN n x:xs = eliminaN (n-1) xs
+
+eliminaN 3 2:[3,5,5,6,7,81,2,3,5] = eliminaN 3-1 3:[5,5,6,7,81,2,3,5]
+                                   = eliminaN 2-1 5:[5,6,7,81,2,3,5]
+                                   = eliminaN 1-1 5:[6,7,81,2,3,5]
+                                   = [5,6,7,81,2,3,5]
+
+
+
+
+
+[2,3,5,5,6,7,81,2,3,5] = xs
+
+2:[3,5,5,6,7,81,2,3,5] = x:xs  --> x = 2 xs=[3,5,5,6,7,81,2,3,5]
+
+---------------------------------------------------------
+
+La función (tomaN n xs) regresa una lista con los primeros n elementos de la lista xs.
+
+tomaN 3 2:[3,5,5,6,7,81,2,3,5] = [2,3,5]
+
+tomaN :: Int -> [a] -> [a]
+
+Caso Base
+tomaN 0 xs = []
+tomaN n [] = error
+
+Caro Recursivo
+tomaN n x:xs = x:(tomaN (n-1) xs)
+
+tomaN 3 2:[3,5,5,6,7,81,2,3,5] = 2:(tomaN 2 3:[5,5,6,7,81,2,3,5])
+                               = 2:(3:(tomaN 1 5:[5,6,7,81,2,3,5]))
+                               = 2:(3:(5:(tomaN 0 5:[6,7,81,2,3,5])))
+                               = 2:(3:(5:[]))
+                               = 2:(3:([5]))
+                               = 2:[3,5]
+                               = [2,3,5]

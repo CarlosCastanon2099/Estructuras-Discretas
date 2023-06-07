@@ -1,0 +1,31 @@
+En los siguientes enunciados, identifica las proposiciones atómicas y asígnales variables proposicionales. 
+Una vez hecho esto, convierte los enunciados a proposiciones lógicas.
+a) Si Juan fue al cine, seguro que Lupe fue también.
+
+Juan fue al cine ------ p
+Lupe fue también ------ q
+
+(p -> q)
+
+Si Juan fue al cine entonces Lupe fue también 
+
+b) Las noticias no son buenas.
+
+Las noticias son buenas ---- p
+
+(¬p)
+
+c) Te darán clave para la red sólo si estás inscrito en el curso.d) El asesino era de tez blanca o clara.
+
+
+Para el siguiente enunciado, asigna variables proposicionales a las proposiciones atómicas y escribe la proposición completa usando esas variables proposicionales.
+a) María fue al teatro el lunes en la noche sólo en el caso de que no tuviera clase el martes temprano.b) Si Juan llevó su Mustang al desfile es porque le cambió el amortiguador el día anterior.c) Si los tres lados de un triángulo son congruentes, entonces los tres ángulos del triángulo son congruentes.d) Nunca ha nevado en Cuernavaca.
+
+
+
+
+
+
+
+
+

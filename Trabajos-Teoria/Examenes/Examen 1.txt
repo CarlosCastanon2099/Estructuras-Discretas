@@ -1,0 +1,220 @@
+El residuo, es el número que sobra después de haber dividido un número entre otro.La función recursiva residuo la cual calcula el residuo resultado de la división de dos números, utilizando los números Nat.
+
+residuo Cero b = Cero
+residuo a Cero = error "No se puede dividir entre cero"
+residuo a b = Si (menorNat a b) entonces a sino (residuo (restaNat a b) b)
+
+mayor (Suc x) Cero = Cierto
+mayor Cero (Suc y) = Falso
+mayor Cero Cero = Falso
+mayor (Suc x) (Suc y) = mayor x y
+
+menorNat Cero (Suc m) = Verdadero
+menorNat (Suc n) Cero = Falso
+menorNat Cero Cero = Falso
+menorNat (Suc n) (Suc m) = menorNat n m
+
+restaNat Cero (Suc m) = error
+restaNat (Suc n) Cero = Suc n
+restaNat (Suc n) (Suc m) = restaNat n m
+-----------------------------------------------------
+
+El doble factorial de un número natural n se define como:0!! = 11!! = 1n!! = n · (n − 2) . . . 3 · 1 Si n es imparn!! = n · (n − 2) . . . 4 · 2 Si n es parPor ejemplo,8!! = 8 ∗ 6 ∗ 4 ∗ 2 = 3849!! = 9 ∗ 7 ∗ 5 ∗ 3 ∗ 1 = 945La función recursiva doblefacNat utilizando los números Nat.
+
+doblefacNat Cero = (Suc Cero)
+doblefacNat (Suc Cero) = (Suc Cero)
+doblefacNat (Suc (Suc n)) = multiplicaNat (Suc (Suc n)) (doblefacNat n)
+
+-----------------------------------------------------
+Definiciones recursivas de funciones sobre listas
+
+quita 0 xs = xs
+quita n [] = []
+quita n x:xs = quita n-1 xs
+
+toma 0 xs = []
+toma n [] = []
+toma n x:xs = x:(toma n-1 xs)
+
+ultimo [x] = xultimo (x:xs) = ultimo xs
+
+iniciales [x] = []iniciales (x:xs) = x:(iniciales xs)longitud [] = 0longitud (x:xs) = 1 + longitud xs
+
+[] ⊔ ys = ys(x:xs) ⊔ ys = x:(xs ⊔ ys)
+----------------------------------------------------
+
+Demostrar que la siguiente propiedad se cumple para toda posible lista
+
++------------------------------------------+
+| iniciales xs = toma (longitud xs − 1) xs |
++------------------------------------------+
+
+La demostración es por inducción estructural sobre la longitud de la lista xs
+
+Caso Base: La lista que contiene un elemento, es decir, xs = [x]. 
+
+Iniciamos con la lista que contiene un elemento ya que pudimos observar que con la lista vacía es imposible iniciar ya que iniciales no está definida con la lista vacía.
+
+iniciales [x] = toma (longitud [x] - 1) [x]                    Sustitución
+    []        = toma (     1       - 1) [x]                    Definición de función longitud
+              = toma           0        [x]                    Aritmética
+              = toma 0 [x]                                     Aritmética
+              = []                                             Definición de función toma
+
+Hipótesis de Inducción: suponemos que la propiedad se cumple para una lista de longitud arbitraria xs
+
+                               iniciales xs = toma (longitud xs - 1) xs
+                               ----------------------------------------
+
+Paso Inductivo: Tengo que demostrar que la propiedad se cumple para un elemento más, es decir, x:xs 
+
+P.D. iniciales x:xs = toma (longitud x:xs - 1) x:xs 
+
+
+toma (longitud x:xs - 1) x:xs = toma ((1 + longitud xs) - 1) x:xs                    Por definición longitud
+                              = toma (longitud xs) x:xs                              Por aritmética
+                              = x:(toma (longitud xs - 1) xs)                        Por definición de toma
+                              = x:(iniciales xs)                                     Por H.I.
+                              = iniciales (x:xs)                                     Por definición de iniciales
+
+Por lo tanto la propiedad vale para todas las listas.
+---------------------------------------------------------------------------------------------------------
+
+Demostrar que la siguiente propiedad se cumple para toda posible lista
+
++---------------------------+
+| iniciales (xs ⊔ [x]) = xs |
++---------------------------+
+
+La demostración es por inducción estructural sobre la longitud de la lista xs
+
+Caso Base: x = []
+
+iniciales ([] ⊔ [x]) = iniciales [x]                    Por definición de ⊔
+                     = []                               Por definición de iniciales
+
+Hipótesis de Inducción: suponer que la propiedad se cumple para cualquier lista de longitud arbitraria xs
+
+                                      iniciales (xs ⊔ [x]) = xs
+                                      -------------------------
+
+Paso Inductivo: demostrar que la propiedad se cumple para un elemento más, es decir, y:xs
+
+P.D. iniciales (y:xs ⊔ [x]) = y:ys
+
+
+iniciales (y:xs ⊔ [x]) = iniciales (y:(xs ⊔ [x]))               Por definición de ⊔
+                       = y:(iniciales (xs ⊔ [x]))               Por definición de iniciales 
+                       = y:xs                                   Por H. I.
+
+Por lo tanto la propiedad se vale para todas las listas.
+----------------------------------------------------------
+
++-----------------------+
+| ultimo (xs ⊔ [x]) = x |
++-----------------------+
+
+La demostración es por inducción estructural sobre la longitud de la lista xs
+
+Caso Base: x = []
+
+ultimo ([] ⊔ [x]) = ultimo [x]                          Por definición de ⊔
+                  = x                                   Por definición de ultimo
+
+Hipótesis de Inducción: suponer que la propiedad se cumple para cualquier lista de longitud arbitraria xs
+
+                                   ultimo (xs ⊔ [x]) = x
+                                   ---------------------
+
+Paso Inductivo: demostrar que la propiedad se cumple para un elemento más, es decir, y:xs
+
+P.D. ultimo (y:xs ⊔ [x]) = x
+
+ultimo (y:xs ⊔ [x]) = ultimo (y:(xs ⊔ [x]))                     Por definición de ⊔
+                    = ultimo (xs ⊔ [x])                         Por definición de ultimo
+                    = x                                         Por H.I.
+
+Por lo tanto la propiedad se vale para todas las listas.
+
+----------------------------------------------------------
+
++-----------------------------+
+| toma n xs ⊔ quita n xs = xs |
++-----------------------------+
+
+La demostración es por inducción estructural sobre la longitud de la lista xs
+
+Caso Base: xs = []
+
+toma n [] ⊔ quita n [] = [] ⊔ []                  Por definiciones de quita y toma
+                       = []                       Por definición de ⊔
+
+Hipótesis de Inducción: suponer que la propiedad se cumple para una lista de longitud arbitraria xs
+
+                                         toma n xs ⊔ quita n xs = xs
+                                         ---------------------------
+
+Paso Inductivo: demostrar que la propiedad se cumple para un elemento más, es decir, x:xs 
+
+P.D. toma n x:xs ⊔ quita n x:xs = x:xs
+
+(toma n x:xs) ⊔ (quita n x:xs) = (x:(toma (n-1) xs)) ⊔ (quita n x:xs)           Por definición de toma
+                               = (x:(toma (n-1) xs)) ⊔ (quita (n-1) xs)         Por definición de quita
+                               = x:(toma (n-1) xs) ⊔ quita (n-1) xs)            Por definición de ⊔
+                               = x:xs                                           Por H.I.
+
+Por lo tanto la propiedad se vale para todas las listas.
+
+-----------------------------------------------------------
+
+Función recursiva de nombre intercalaLis, que recibe dos listas del mismo tamaño y regresa una lista con sus elementos intercalados de cada una de las listas. 
+
+La función debe verificar que las dos listas sean de la misma longitud.
+Por ejemplo: intercala [1,2,3,4,5] [6,7,8,9,0] = [1,6,2,7,3,8,4,9,5,0]
+
+intercala [] [] = []
+intercala (x:xs) (y:ys) = Si (longitud (x:xs) = longitud (y:ys)) entonces x:(y:(intercala xs ys)) sino error Las listas no son del mismo tamaño
+
+-------------------------------------------------------------
+Función recursiva minimoLis que recibe una lista de números y devuelve el menor de ellos.
+Por ejemplo minimolis [1,6,2,7,3,8,4,9,5,0] = 0
+
+minimolis [x] = x
+minimolis (x:xs) = Si (x < (minimolis xs)) entonces x sino minimolis xs
+
+-------------------------------------------------------------
+
+Función recursiva mayoresLis que recibe un número n y una lista de números xs y devuelve una lista con los elementos mayores estrictos que n.
+Por jemplo: mayoresLis 3 [2,6,1,2,3,4,5] = [6,4,5]
+
+mayoresLis n [] = []
+mayoresLis n (x:xs) = Si (n<x) entonces x:(mayoresLis n xs) sino (mayoresLis n xs)
+
+-------------------------------------------------------------
+
+Función recursiva aplana que recibe una lista de listas y devuelve una lista con todos los elementos que aparecen en las listas.
+Por ejemplo: aplana [[0,1,2],[3,4],[5,6,7,8]] = [0,1,2,3,4,5,6,7,8]
+
+aplana [] = []
+aplana (xs:xss) = xs ⊔ (aplana xss)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

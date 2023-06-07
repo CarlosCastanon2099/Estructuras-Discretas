@@ -1,0 +1,144 @@
+Función que dada una lista de números, regrese el elemento más pequeño.
+
+Recibe una lista de números
+
+Regresa un elemento de la lista el cual debe ser el número menor
+
+Ejemplo minList [1,6,2,7,3,8,4,9,5,0] = 0
+
+Caso Base:
+
+minList [] = []
+
+Caso Recursivo:
+
+minList (x:xs) = 
+
+ [6,2,7,1,8,0,9,5,4]
+
+  6 < 2 --> No
+  2 < 7 --> Si
+  2 < 1 --> No
+  1 < 8 --> Si
+  1 < 0 --> No
+  0 < 9 --> Si
+  0 < 5 --> Si
+  0 < 4 --> Si
+  Respuesta 0
+
+Caso Base:
+
+minLits [x] = x
+
+Caso Recursivo:
+
+minList (x:xs) = Si x < (cabeza xs) -> x < minList (cola xs) sino -> (cabeza xs) < minList (cola xs)
+
+
+minList (x:xs) = if x < (head xs) then x < minList (tail xs) else
+(head xs) < minList (tail xs)
+
+----------------------------------------------------------------
+
+Demostración por inducción 
+
+Conjunto definido recursivamente 
+
+1. [] esta en B
+2. Si w1 y w2 estan en B entonces a:w1 ++ b:w2 y b:w1 ++ a:w2 esta en B
+3. Son todas
+
+Demuestra que todas los elementos de B tienen el mismo número de a's que de b's
+
+
+B = { [], [a,b], [b,a], [a,b,b,a], [b,a,b,a], 
+
+w1 = []
+w2 = []
+
+a:w1 -> a:[] -> [a]		b:w1 -> b:[] -> [b]
+b:w2 -> b:[] -> [b]		a:w2 -> a:[] -> [a]
+
+[a] ++ [b] -> [a,b]		[b] ++ [a] -> [b,a]
+
+w1 = []	      			
+w2 = [b,a]
+
+a:w1 -> a:[] -> [a]		b:w1 -> b:[] -> [b]
+b:w2 -> b:[b,a] -> [b,b,a]	a:w2 -> a:[b,a] -> [a,b,a]
+
+a:w1 ++ b:w2 -> [a] ++ [b,b,a] -> [a,b,b,a]
+
+b:w1 ++ a:w2 -> [b] ++ [a,b,a] -> [b,a,b,a]
+
+Demostración por inducción estructural sobre la longitud de la lista
+
+Demuestra que todas los elementos de B tienen el mismo número de a's que de b's
+
+B = { [], [a,b], [b,a], [a,b,b,a], [b,a,b,a],
+
+Caso Base: la lista vacía [] Si cumple con la propiedad 
+
+Hipótesis de Inducción: Suponer que tenemos dos elementos que cumplen
+con la propiedad w1 tiene el mismo número de a's que de b's y lo mismo
+con w2, |w1| = 2k y |w2| = 2p
+
+Paso Inductivo: a:w1 ++ b:w2 y b:w1 ++ a:w2
+
+|a:w1| = 2k+1
+|b:w2| = 2p+1
+
+w1 por H. I. tiene el mismo número de a's que de b's y como |w1|=2k,
+entonces w1 tiene k a's y tiene k b's
+
+a:w1 esta lista contiene 2k+1 elementos de los cuales k+1 son a's y k
+son b's
+
+w2 por H.I. tiene el mismo número de a's que de b's  y como |w2|=2p,
+entonces w2 tiene p a's y tiene p b's
+
+b:w2 esta lista contiene 2p+1 elementos de los cuales p+1 son b's y p
+son a's
+
+|(a:w1) ++ (b:w2)| = |a:w1| + |b:w2|
+                   = 2k+1 + 2p+1
+		   = 2k + 2p + 2
+		   = 2(k+p+1)
+
+(a:w1) ++ (b:w2) = [a,2k(todos los elementos de w1),b,2p(todos los
+elementos de w2)]
+
+k(a) - número de elementos que son a de la lista w1
+k(b) - número de elementos que son b de la lista w1
+p(a) - número de elementos que son a de la lista w2
+p(b) - número de elementos que son b de la lista w2
+
+
+|a:w1 ++ b:w2| = k(a) + k(b) + 1"la a que estamos pegando a la cabeza
+ de w1" + p(a) + p(b) + 1"la b que estamos pegando a la cabeza de w2"
+
+Con lo cual tenemos k+p+1 a's y k+p+1 b's
+
+Con ello podemos concluir que la lista a:w1 ++ b:w2 tiene el mismo
+número de a's que de b's.
+
+Demuestre que también se cumple la propiedad con b:w1 ++ a:w2.
+
+
+
+
+---------------------------------------------------------
+reversa (xs ++ ys) = reversa (ys) ++ reversa (xs)
+
+Por inducción sobre la longitud de la lista xs
+
+Caso Base: xs = []
+
+reversa ([] ++ ys) = reversa ys ++ reversa []
+
+reversa (xs ++ ys) = reversa (ys) ++ reversa (xs)
+
+reversa (x:xs ++ ys) = reversa (ys) ++ reversa (x:xs)
+
+
+
