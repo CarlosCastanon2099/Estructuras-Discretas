@@ -1,14 +1,6 @@
 module Practica5 where
 
 {- 
-
-Alumno: Carlos Emilio Castañon Maldonado
-
-NOTA: En el archivo Practica5Tests.hs cambiar en la linea 64 el res_arbolProp
-Por: "(\"[Conj ?Syss x  !Neg F!? <Impl {Disy a  b}  F>]\" (\"?Syss x !Neg F!?\" (H: \"x\")  (H: \"<->\")  (\"!Neg F!\" (H: \"~\")  (H: \"F\")  _))  (H: \"^\")  (\"<Impl {Disy a  b} F>\" (\"{Disy a b}\" (H: \"a\")  (H: \"V\")  (H: \"b\"))  (H: \"->\")  (H: \"F\")))" 
-Ya que el que esta originalmeente tiene 5 espacios en blanco entre simbolos que hace que marque la prueba como False
-Aunque se traten de las mismas cadenas a excepcion de esos 5 espacios en blanco xd.
-
 La funcion lambda1 esta definida de la siguiente manera:
 
 lambda1 :: (Int -> Int -> Int) -> [Int] -> Int
@@ -371,7 +363,7 @@ tablaDeVerdad p = do
 
 
 -- Funcion auxiliar que nos devuelve una lista de las variables de una formula
--- Notese que esta es la version Digi-Evolucionada de vars del ejercicio 5)
+-- Notese que esta es la version evolucionada de vars del ejercicio 5)
 -- Y que por alguna razon no funciona el usar vars directamente en tablaDeVerdad XD
 -- PD: Ya me di cuenta por que pasaba lo anterior pero lo dejo como ejercicio para el lector 
 listaVariables :: Prop -> [String]

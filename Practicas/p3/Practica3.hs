@@ -1,7 +1,7 @@
 module Practica3
 where
 
--- Alumno: Carlos Emilio Castañon Maldonado
+
 
 -- Funcion Auxiliar cuya funcion es:
 -- Verificar si un elemento se encuentra en una lista
@@ -120,7 +120,6 @@ minimoListaAux x (y:ys)
 -- En esta practica, esta lista la devuelve la funcion: listaAlumnos
 -- Debemos usar las funciones mapea y filtra para lograr esto.
 
--- Nota: despues de todo un fin de semana de intentarlo, por fin quedo bien esta func usando mapea y filtra =D
 calificaciones :: [(String, Int)] -> ([(String, Int, String )], [(String, Int, String)])
 calificaciones [] = ([],[])
 calificaciones (x:xs) 
@@ -129,8 +128,7 @@ calificaciones (x:xs)
 
 
 {-
--- La funcion anterior pero sin usar mapea y filtra, pasa los test y casi entrego esta pero
--- no me di cuenta que no usaba mapea y filtra, asi que la deje comentada jejejejejeje.
+-- La funcion anterior pero sin usar mapea y filtra, esta version tambien pasa los test 
 calificaciones :: [(String, Int)] -> ([(String, Int, String )], [(String, Int, String)])
 calificaciones [] = ([],[])
 calificaciones (x:xs) 

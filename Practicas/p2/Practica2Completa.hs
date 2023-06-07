@@ -128,7 +128,6 @@ sumaDigitos x = (mod x 10) + sumaDigitos (div x 10)
 
 -- 10
 -- Funcion que imprime un entero usando la libreria de Haskell "Text.Printf"
--- Debo decir que descubrir printf y hacer esta funcion fue igual o mas dificil que hacer lo de los vectores
 imprimeUnEntero :: Int -> String 
 imprimeUnEntero = printf "%v"
 

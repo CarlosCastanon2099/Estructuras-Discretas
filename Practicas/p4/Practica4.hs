@@ -3,7 +3,7 @@ module Practica4 where
 data Arbol a = Vacio | AB a (Arbol a) (Arbol a) | H a deriving (Show, Eq)
 --data Arbol a = Vacio | AB a (Arbol a) (Arbol a) | H a deriving (Eq)
 
--- Alumno: Carlos Emilio Castañon Maldonado
+
 
 -- 1)
 -- La función listaAArbol que recibe una lista xs, la funcion regresa un árbol binario 
