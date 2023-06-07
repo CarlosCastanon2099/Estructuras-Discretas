@@ -22,7 +22,7 @@ Proyectos, Prácticas, Teoría y Tareas realizadas durante el curso de Estructur
 ***<p style="text-align: center;">Carlos Emilio Castañón Maldonado   </p>*** 
 -->
 
-[![](https://media.giphy.com/media/l3978y5HqiEtqupiM/giphy.gif)](https://www.youtube.com/watch?v=X8f5RgwY8CI)
+[![](https://media.giphy.com/media/l3978y5HqiEtqupiM/giphy.gif)](https://www.youtube.com/watch?v=G_sBOsh-vyI)
 
 
 
