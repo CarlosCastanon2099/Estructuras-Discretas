@@ -20,20 +20,22 @@
 Las prácticas en su mayoría fueron enfocadas a programacion de codigo, sin embargo tambien se abordo el diseño de circuitos digitales, para los circuitos el software empleado fue [Logisim](http://www.cburch.com/logisim/), para la programacion de codigo en Haskell se empleo el software [Haskell](https://www.haskell.org/), ambos software son de uso libre y se pueden descargar desde sus respectivas paginas oficiales, para poder ejecutar Logisim basta con tener la paqueteria de [JAVA](https://www.oracle.com/java/technologies/downloads/) instalada, ademas de que en caso de que al darle doble click a los circuitos, estos no se ejecuten, bastará con ejecutar el siguiente comando:
 
 LOGISIM:
-```
+
+```Haskell
 java -jar logisim-generic-2.7.1.jar
 ```
 
 En el caso de Haskell, la estructura de compilación y ejecución de un programa es:
 
 Haskell :
-```
+
+```Python
 ghci NombreDelArchivo.hs
 ```
 
 Habiendo ejecutado el anterior dentro de la carpeta que alberga el archivo, tendremos una pantalla como la siguiente:
 
-```
+```Ruby
 GHCi, version 8.6.5: http://www.haskell.org/ghc/  :? for help
 [1 of 1] Compiling NombreDelArchivo ( NombreDelArchivo.hs, interpreted )
 Ok, one module loaded.
@@ -52,7 +54,7 @@ es necesario instalar la biblioteca de QuickCheck en caso de no tenerla (Haskell
 ## Instalando QuickCheck
 Primero debemos revisar si tenemos cabal instalado (el cual debería ya estar instalado), esto lo hacemos con el comando:
 
-```
+```Kotlin
 > cabal --version
 cabal-install version 2.4.0.0
 compiled using version 2.4.0.1 of the Cabal library 
@@ -60,12 +62,13 @@ compiled using version 2.4.0.1 of the Cabal library
 
 Una vez que hemos verificado que tenemos cabal instalado, procedemos a instalar QuickCheck con el siguiente comando:
 
-```
+```Haskell
 > cabal install QuickCheck
 ```
 
 Esto debería desplegar la siguiente pantalla:
 
+```Kotlin
     cabal install QuickCheck
     Warning: The install command is a part of the legacy v1 style of cabal usage.
 
@@ -91,3 +94,5 @@ Esto debería desplegar la siguiente pantalla:
     Starting     QuickCheck-2.14.2
     Building     QuickCheck-2.14.2
     Completed    QuickCheck-2.14.2
+
+```
