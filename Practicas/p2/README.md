@@ -15,7 +15,7 @@
 
 Compilar mediante:
 
-```
+```Ruby
 ghci Practica2Completa.hs
 ```
 
@@ -29,7 +29,8 @@ Recordemos que dado un vector A = (x1, y1, z1)  y un vector  B = (x2, y2, z2)
 
 Su producto punto esta dado por la formula: A * B = (x1 * x2) + (y1 * y2) + (z1 * z2)
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica2Completa> productoPunto3D (1,2,3) (4,5,6)
 32
 
@@ -44,7 +45,8 @@ Su producto punto esta dado por la formula: A * B = (x1 * x2) + (y1 * y2) + (z1 
 
 La Función productoPunto recibe dos listas de enteros de longitud n  y  m  respectivamente, las cuales representan vectores de numeros enteros y nos devuelve su producto punto. 
   - Ejemplo de uso:
-```
+
+```Haskell
 *Practica2Completa> productoPunto [4,4,2,12,2] [9,6,7,1,4]
 94
 ```
@@ -53,7 +55,8 @@ La Función productoPunto recibe dos listas de enteros de longitud n  y  m  resp
 
 La Función juntaListaElementos recibe dos listas de elementos y regresa una lista de duplas con las parejas obtenidas de emparejar cada elemento de cada lista con su pareja de la otra lista.
   - Ejemplo de uso:
-```
+
+```Haskell
 *Practica2Completa> juntaListaElementos [1,2,3] [4,5,6]
 [(1,4),(2,5),(3,6)]
 ```
@@ -69,7 +72,8 @@ Y se calcula con:
 <p align="center"><img width="1000" src="/GIFS/Matriz1.png" alt="Calculo de Producto Cruz"></p>
 
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica2Completa> productoCruz (1,4,6) (9,5,3)
 (-18,51,-31)
 
@@ -82,7 +86,8 @@ Y se calcula con:
 
 La funcion restaVectores recibe 2 tripletas de enteros que serán n y m, la presente regresa n - m
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica2Completa> restaVectores (0,0,0) (2,5,7)
 (-2,-5,-7)
 
@@ -106,7 +111,8 @@ Tendremos que el vector ortogonal sera (Nx,Ny,Nz)
 
 En donde Nx = (Vy * Wz) - (Vz * Wy) , Ny = (Vz * Wx) - (Vx * Wz) , Nz = (Vx * Wy) - (Vy * Wx)
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica2Completa> normalATriangulo  (1,4,6) (4,2,5) (7,2,8)
 (-6,-12,6)
 
@@ -120,7 +126,8 @@ La funcion divisoresPropios recibe un entero y regresa una lista con sus divisor
 
 Un divisor propio de un número es cualquier divisor que no es el mismo número que el que divide.
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica2Completa> divisoresPropios 99
 [1,3,9,11,33]
 
@@ -140,7 +147,8 @@ regresa los primeros 10 numeros pares y despues los suma, en otras palabras:
 
 2 + 4 + 6 + 8 + 10 + 12 + 14 + 16 + 18 + 20 = 110
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica2Completa> sumaPares 10
 110
 
@@ -152,7 +160,8 @@ regresa los primeros 10 numeros pares y despues los suma, en otras palabras:
 
 La funcion primo devuelve el n-esimo numero primo.
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica2Completa> primo 8
 19
 
@@ -164,7 +173,8 @@ La funcion primo devuelve el n-esimo numero primo.
 
 La funcion sumaDigitos calcula la suma de los digitos de un numero
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica2Completa> sumaDigitos 17
 8
 
@@ -180,7 +190,8 @@ La funcion sumaDigitos calcula la suma de los digitos de un numero
 La funcion imprimeUnEntero recibe un entero (puede ser positivo o negativo) y regresa su representacion en String, esto sin hacer uso de la funcion show.
 
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica2Completa> imprimeUnEntero 2099
 "2099"
 
