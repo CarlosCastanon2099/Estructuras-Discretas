@@ -15,7 +15,7 @@
 
 Compilar mediante:
 
-```
+```Ruby
 ghci Practica5.hs
 ```
 
@@ -25,7 +25,8 @@ Una vez compilado, tendremos acceso a las siguientes funciones:
 
 La Función tablaDeVerdad recibe una proposicion y regresa su tabla de verdad
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica5> tablaDeVerdad (Conj (Var "p") (Var "q"))
 p | q | [Conj p  q]
 -----------------
@@ -55,7 +56,8 @@ False | False | True
 
 La Función filtraTieneLongitudPar recibe una lista de Strings y regresa una lista que contiene solo a los string con una longitud par.
   - Ejemplo de uso:
-```
+
+```Haskell
 *Practica5> filtraTieneLongitudPar ["a", "se", "non","casa"]
 ["se","casa"]
 ```
@@ -64,7 +66,8 @@ La Función filtraTieneLongitudPar recibe una lista de Strings y regresa una lis
 
 La Función concatenaConEspacios recibe una lista de strings y regresa un string que es la concatenacion de todos los string con un espacio entre cada palabra.
   - Ejemplo de uso:
-```
+
+```Haskell
 *Practica5> concatenaConEspacios ["hola","mundo","a","todos"]
 "hola mundo a todos "
 ```
@@ -74,7 +77,8 @@ La Función concatenaConEspacios recibe una lista de strings y regresa un string
 La Función foldlT recibe una funcion f(b-> a -> b), un valorInicial a, un Arbol a y regresa un
 valor b que es el resultado de irle aplicando la funcion f a todo el arbol.
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica5> foldlT (+) 10 (AB 1 (H 2) (H 3))
 16
 
@@ -89,7 +93,8 @@ valor b que es el resultado de irle aplicando la funcion f a todo el arbol.
 
 La Función propAArbolString recibe una proposicion y arma su arbol de sintaxis.
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica5> propAArbolString (Disy (Var "x") (Var "y"))
 ("{Disy x y}" (H: "x")  (H: "V")  (H: "y"))
 
@@ -101,7 +106,8 @@ La Función propAArbolString recibe una proposicion y arma su arbol de sintaxis.
 
 La Función vars recibe una proposicion y regresa una lista que contiene todas las variables que aparecen en la proposicion sin repetidos.
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica5> vars (Disy (Neg (Var "x")) (Var "y"))
 ["x","y"]
 
@@ -116,7 +122,8 @@ La Función vars recibe una proposicion y regresa una lista que contiene todas l
 
 La Función fnn recibe una proposicion y regresa la misma proposicion en su Forma Normal Negativa.
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica5> fnn (Neg (Disy (Var "x") T) )
 [Conj !Neg x!  F]
 
