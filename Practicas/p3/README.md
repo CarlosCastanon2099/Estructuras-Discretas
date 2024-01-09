@@ -15,7 +15,7 @@
 
 Compilar mediante:
 
-```
+```Ruby
 ghci Practica3.hs
 ```
 
@@ -25,7 +25,8 @@ Una vez compilado, tendremos acceso a las siguientes funciones:
 
 La Función eliminaRepetidos toma una lista y regresa otra lista pero sin elementos repetidos
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica3> eliminaRepetidos [1,2,1,3,1,2,5,6,4,2]
 [1,2,3,5,6,4]
 
@@ -37,7 +38,8 @@ La Función eliminaRepetidos toma una lista y regresa otra lista pero sin elemen
 
 La Función unionListas toma dos listas y regresa la union de ambas listas (sin repetidos).
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica3> unionListas [1,2,3,4,9] [2,2,2,4,1,3,5,7,4]
 [1,2,3,4,9,5,7]
 
@@ -49,7 +51,8 @@ La Función unionListas toma dos listas y regresa la union de ambas listas (sin 
 
 La Función interseccionListas toma dos listas y regresa su interseccion (sin repetidos).
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica3> interseccionListas [1,2,3,5] [5,6,7,8,1,2]
 [1,2,5]
 
@@ -62,7 +65,8 @@ La Función interseccionListas toma dos listas y regresa su interseccion (sin re
 La Función mapea recibe una funcion f (a -> b) y una lista l de tipo a y regresa una lista de tipo b 
 que es el resultado de aplicarle f a cada uno de los elementos de l
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica3> mapea (*10) [1..10]
 [10,20,30,40,50,60,70,80,90,100]
 
@@ -75,7 +79,8 @@ que es el resultado de aplicarle f a cada uno de los elementos de l
 La Función zipeaWith recibe una funcion f (a -> b -> c), una lista l1 de tipo a y una lista l2 de tipo b 
 regresa una lista de tipo c que es el resultado de aplicarle f a cada uno de los elementos de l1 y l2
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica3> zipeaWith (++) ["Hola", "Dona"] [" Maximo", " Azucar"]
 ["Hola Maximo","Dona Azucar"]
 
@@ -93,7 +98,8 @@ regresa una lista de tipo c que es el resultado de aplicarle f a cada uno de los
 
 La Función filtra recibe una funcion f (a -> Bool) y una lista l de tipo a, regresa una lista de los elementos de l que cumplan f.
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica3> filtra (< 10 ) [1..30]
 [1,2,3,4,5,6,7,8,9]
 
@@ -111,7 +117,8 @@ La Función filtra recibe una funcion f (a -> Bool) y una lista l de tipo a, reg
 
 La Función minimoLista recibe una lista l de tipo Int y regresa el elemento mas chico de esa lista.
   - Ejemplos de uso:
-```
+
+```Haskell
 *Practica3> minimoLista [10,12,4,2,7,99]
 2
 
@@ -132,7 +139,8 @@ Esta regrese una tupla cuya primer entrada es una lista de tripletas que contien
 
 La segunda tiene la misma estructura, solo que contiene a los alumnos con una calificacion menor o igual a 6 y un mensaje de que se esfuercen mas.
   - Ejemplo de uso:
-```
+
+```Python
 *Practica3> calificaciones listaAlumnos
 ([("Martin",7,"Felicidades!"),("Ritchie",7,"Felicidades!"),("Wayne",9,"Felicidades!"),("Ameline",9,"Felicidades!"),("Estrella",7,"Felicidades!"),("Perla",9,"Felicidades!"),("Anselma",10,"Felicidades!"),("June",10,"Felicidades!")],[("Benedict",6,"Necesitas esforzarte +"),("Paola",6,"Necesitas esforzarte +"),("Karolina",2,"Necesitas esforzarte +"),("Lissy",3,"Necesitas esforzarte +"),("Clari",4,"Necesitas esforzarte +"),("Anna",1,"Necesitas esforzarte +"),("Harriott",2,"Necesitas esforzarte +"),("Bryant",6,"Necesitas esforzarte +"),("Noah",5,"Necesitas esforzarte +"),("Jerri",3,"Necesitas esforzarte +"),("Shandra",3,"Necesitas esforzarte +"),("Costanza",3,"Necesitas esforzarte +"),("Ashlin",6,"Necesitas esforzarte +"),("Susannah",6,"Necesitas esforzarte +"),("Renie",4,"Necesitas esforzarte +"),("Whittaker",1,"Necesitas esforzarte +"),("Madelle",1,"Necesitas esforzarte +"),("Marv",4,"Necesitas esforzarte +"),("Gwenore",3,"Necesitas esforzarte +"),("Crysta",3,"Necesitas esforzarte +"),("Merola",2,"Necesitas esforzarte +"),("Trent",6,"Necesitas esforzarte +")])
 ```
@@ -140,7 +148,8 @@ La segunda tiene la misma estructura, solo que contiene a los alumnos con una ca
 📌 listaAlumnos
 
 La Función listaAlumnos contiene a la lista de alumnos y sus calificaciones
-```
+
+```Haskell
 listaAlumnos :: [(String, Int)]
 listaAlumnos = [("Benedict",6),("Martin",7),("Paola",6),("Karolina",2),("Lissy",3),
                 ("Clari",4),("Ritchie",7),("Anna",1),("Harriott",2),("Wayne",9),
